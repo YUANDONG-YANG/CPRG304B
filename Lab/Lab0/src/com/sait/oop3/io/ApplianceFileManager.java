@@ -1,13 +1,14 @@
 package com.sait.oop3.io;
 
 import com.sait.oop3.appliances.*;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * File manager class responsible for reading and writing appliance data
- *
+ * <p>
  * This class handles all file I/O operations for the appliance management system,
  * including loading appliances from file and saving them back to file.
  * Uses dynamic resource loading with classpath-first approach and filesystem fallback.
@@ -22,7 +23,10 @@ public class ApplianceFileManager {
 
     // Possible filesystem paths to search for the file
     private static final String[] POSSIBLE_PATHS = {
+            "src/resources/",
             "Lab/Lab0/src/resources/",
+            "resources/",
+            "src/main/resources/",
             ""
     };
 
@@ -88,6 +92,8 @@ public class ApplianceFileManager {
      * @return File object for the appliances file
      * @throws IOException if file cannot be found in any location
      */
+    private static String file_path = null;
+
     private static File findAppliancesFile() throws IOException {
         String currentDir = System.getProperty("user.dir");
 
@@ -105,6 +111,7 @@ public class ApplianceFileManager {
                 if (DEBUG) {
                     System.out.println("Found appliances file at: " + file.getAbsolutePath());
                 }
+                file_path = file.getAbsolutePath();
                 return file;
             }
         }
@@ -368,29 +375,28 @@ public class ApplianceFileManager {
      * @throws IOException if no writable location found
      */
     private static File findWritableLocation() throws IOException {
-        String currentDir = System.getProperty("user.dir");
+        // If we previously found a file, use its directory
+        if (file_path != null) {
+            File existingFile = new File(file_path);
+            File parentDir = existingFile.getParentFile();
 
-        for (String path : POSSIBLE_PATHS) {
-            File dir = new File(currentDir, path);
-            File file = new File(dir, FILENAME);
-
-            // Check if directory exists or can be created
-            if (dir.exists() || dir.mkdirs()) {
-                // Check if we can write to this location
-                if (dir.canWrite()) {
-                    if (DEBUG) {
-                        System.out.println("Will save to: " + file.getAbsolutePath());
-                    }
-                    return file;
+            // Check if directory exists and is writable
+            if (parentDir != null && parentDir.exists() && parentDir.canWrite()) {
+                if (DEBUG) {
+                    System.out.println("Will save to: " + existingFile.getAbsolutePath());
                 }
+                return existingFile;
             }
         }
 
         // Fallback to current directory
+        String currentDir = System.getProperty("user.dir");
         File fallbackFile = new File(currentDir, FILENAME);
+
         if (DEBUG) {
             System.out.println("Using fallback save location: " + fallbackFile.getAbsolutePath());
         }
+
         return fallbackFile;
     }
 
@@ -400,7 +406,7 @@ public class ApplianceFileManager {
      * This overwrites the original file with updated data
      *
      * @param appliances List of appliances to save
-     * @param file File to save to
+     * @param file       File to save to
      * @return true if save was successful, false otherwise
      */
     private static boolean saveAppliancesToFile(List<Appliance> appliances, File file) {

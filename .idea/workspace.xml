@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9227570a-f736-4980-b4a6-9399a965f5b2" name="Changes" comment=" * @author Yuandong Yang">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/ModernAppliancesApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Appliance.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Dishwasher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Microwave.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Refrigerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Vacuum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/exception/ApplianceCreationException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/io/ApplianceFileManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/resources/Lab0 Intro to Java.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/resources/appliances.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/ModernAppliancesApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/ModernAppliancesApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/appliances/Refrigerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/appliances/Refrigerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/appliances/Vacuum.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/appliances/Vacuum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/io/ApplianceFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/io/ApplianceFileManager.java" afterDir="false" />
-    </list>
+    <list default="true" id="9227570a-f736-4980-b4a6-9399a965f5b2" name="Changes" comment="fix bug can not overwrite txt file" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +23,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Lab/Lab0" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -75,7 +59,7 @@
       <workItem from="1757390464810" duration="255000" />
       <workItem from="1757393034371" duration="510000" />
       <workItem from="1757393659953" duration="128000" />
-      <workItem from="1757393813349" duration="2539000" />
+      <workItem from="1757393813349" duration="2754000" />
     </task>
     <task id="LOCAL-00001" summary="update ignore">
       <created>1757393110715</created>
@@ -105,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1757394313066</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix bug can not overwrite txt file">
+      <created>1757396516828</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1757396516828</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +116,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update ignore" />
     <MESSAGE value=" * @author Yuandong Yang" />
-    <option name="LAST_COMMIT_MESSAGE" value=" * @author Yuandong Yang" />
+    <MESSAGE value="fix bug can not overwrite txt file" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug can not overwrite txt file" />
   </component>
 </project>

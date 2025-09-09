@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9227570a-f736-4980-b4a6-9399a965f5b2" name="Changes" comment="update ignore">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9227570a-f736-4980-b4a6-9399a965f5b2" name="Changes" comment=" * @author Yuandong Yang">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab/Lab0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/ModernAppliancesApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Appliance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Dishwasher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Microwave.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Refrigerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/appliances/Vacuum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/exception/ApplianceCreationException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/com/sait/oop3/io/ApplianceFileManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/resources/Lab0 Intro to Java.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/out/production/Lab0/resources/appliances.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/ModernAppliancesApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/ModernAppliancesApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/appliances/Refrigerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/appliances/Refrigerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/appliances/Vacuum.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/appliances/Vacuum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/io/ApplianceFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/src/com/sait/oop3/io/ApplianceFileManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +75,7 @@
       <workItem from="1757390464810" duration="255000" />
       <workItem from="1757393034371" duration="510000" />
       <workItem from="1757393659953" duration="128000" />
-      <workItem from="1757393813349" duration="350000" />
+      <workItem from="1757393813349" duration="2539000" />
     </task>
     <task id="LOCAL-00001" summary="update ignore">
       <created>1757393110715</created>
@@ -80,7 +91,21 @@
       <option name="project" value="LOCAL" />
       <updated>1757393726057</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update ignore">
+      <created>1757394170128</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1757394170128</updated>
+    </task>
+    <task id="LOCAL-00004" summary=" * @author Yuandong Yang">
+      <created>1757394313066</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1757394313066</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,6 +124,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update ignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ignore" />
+    <MESSAGE value=" * @author Yuandong Yang" />
+    <option name="LAST_COMMIT_MESSAGE" value=" * @author Yuandong Yang" />
   </component>
 </project>

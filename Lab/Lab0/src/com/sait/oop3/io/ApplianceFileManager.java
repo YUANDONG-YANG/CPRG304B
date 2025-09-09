@@ -12,6 +12,8 @@ import java.util.List;
  * including loading appliances from file and saving them back to file.
  * Uses dynamic resource loading with classpath-first approach and filesystem fallback.
  *
+ * @author Your Name
+ * @version 2.0
  */
 public class ApplianceFileManager {
 
@@ -20,10 +22,7 @@ public class ApplianceFileManager {
 
     // Possible filesystem paths to search for the file
     private static final String[] POSSIBLE_PATHS = {
-            "resources/",
-            "src/resources/",
             "Lab/Lab0/src/resources/",
-            "src/main/resources/",
             ""
     };
 
@@ -397,6 +396,8 @@ public class ApplianceFileManager {
 
     /**
      * Saves appliances to the specified file
+     * Only saves appliances with quantity > 0 (removes sold out items)
+     * This overwrites the original file with updated data
      *
      * @param appliances List of appliances to save
      * @param file File to save to
@@ -404,10 +405,32 @@ public class ApplianceFileManager {
      */
     private static boolean saveAppliancesToFile(List<Appliance> appliances, File file) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
+            int savedCount = 0;
+            int removedCount = 0;
+
             for (Appliance appliance : appliances) {
-                writer.println(appliance.toFileFormat());
+                if (appliance.getQuantity() > 0) {
+                    // Only save appliances with stock > 0
+                    writer.println(appliance.toFileFormat());
+                    savedCount++;
+                } else {
+                    // Count sold out items that won't be saved
+                    removedCount++;
+                    if (DEBUG) {
+                        System.out.println("Removing sold out item: " + appliance.getItemNumber() + " - " + appliance.getBrand());
+                    }
+                }
             }
-            System.out.println("Successfully saved " + appliances.size() + " appliances to " + file.getAbsolutePath());
+
+            System.out.println("Successfully saved " + savedCount + " appliances to " + file.getAbsolutePath());
+            if (removedCount > 0) {
+                System.out.println("Removed " + removedCount + " sold out appliances from file.");
+            }
+
+            if (DEBUG) {
+                System.out.println("Original file has been overwritten with updated data.");
+            }
+
             return true;
 
         } catch (IOException e) {

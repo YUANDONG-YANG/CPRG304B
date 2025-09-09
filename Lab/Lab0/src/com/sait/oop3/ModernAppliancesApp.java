@@ -54,15 +54,16 @@ public class ModernAppliancesApp {
     private static void displayMenu() {
         System.out.println("\nWelcome to Modern Appliances!");
         System.out.println("\nHow may we assist you?");
-        System.out.println("1 – Check out appliance");
-        System.out.println("2 – Find appliances by brand");
-        System.out.println("3 – Display appliances by type");
-        System.out.println("4 – Produce random appliance list");
-        System.out.println("5 – Save & exit");
+        System.out.println("1 - Check out appliance");
+        System.out.println("2 - Find appliances by brand");
+        System.out.println("3 - Display appliances by type");
+        System.out.println("4 - Produce random appliance list");
+        System.out.println("5 - Save & exit");
     }
 
     /**
      * Handles appliance checkout functionality
+     * Matches the expected output format from Lab 0 requirements
      */
     private static void checkoutAppliance() {
         System.out.print("Enter the item number of an appliance:");
@@ -75,9 +76,14 @@ public class ModernAppliancesApp {
         } else if (!appliance.isAvailable()) {
             System.out.println("The appliance is not available to be checked out.");
         } else {
+            // Execute checkout operation (decrease stock)
             appliance.checkout();
+
+            // Display success message (matches expected output format)
             System.out.println("Appliance \"" + itemNumber + "\" has been checked out.");
-            System.out.println("\n" + appliance.toString());
+
+            // Optional: If stock becomes 0, it will be filtered out when saving
+            // We keep it in memory for now but won't save to file
         }
     }
 
@@ -105,7 +111,7 @@ public class ModernAppliancesApp {
 
         List<Appliance> matchingAppliances = new ArrayList<>();
         for (Appliance appliance : appliances) {
-            if (appliance.getBrand().equalsIgnoreCase(brand)) {
+            if (appliance.getBrand().equalsIgnoreCase(brand) && appliance.getQuantity() > 0) {
                 matchingAppliances.add(appliance);
             }
         }
@@ -126,10 +132,10 @@ public class ModernAppliancesApp {
      */
     private static void displayAppliancesByType() {
         System.out.println("\nAppliance Types");
-        System.out.println("1 – Refrigerators");
-        System.out.println("2 – Vacuums");
-        System.out.println("3 – Microwaves");
-        System.out.println("4 – Dishwashers");
+        System.out.println("1 - Refrigerators");
+        System.out.println("2 - Vacuums");
+        System.out.println("3 - Microwaves");
+        System.out.println("4 - Dishwashers");
 
         int type = getIntInput("Enter type of appliance:");
 
@@ -160,7 +166,7 @@ public class ModernAppliancesApp {
         System.out.println("\nMatching refrigerators:");
         boolean found = false;
         for (Appliance appliance : appliances) {
-            if (appliance instanceof Refrigerator) {
+            if (appliance instanceof Refrigerator && appliance.getQuantity() > 0) {
                 Refrigerator fridge = (Refrigerator) appliance;
                 if (fridge.getNumberOfDoors() == doors) {
                     System.out.println(fridge.toString());
@@ -184,7 +190,7 @@ public class ModernAppliancesApp {
         System.out.println("\nMatching vacuums:");
         boolean found = false;
         for (Appliance appliance : appliances) {
-            if (appliance instanceof Vacuum) {
+            if (appliance instanceof Vacuum && appliance.getQuantity() > 0) {
                 Vacuum vacuum = (Vacuum) appliance;
                 if (vacuum.getBatteryVoltage() == voltage) {
                     System.out.println(vacuum.toString());
@@ -216,7 +222,7 @@ public class ModernAppliancesApp {
         System.out.println("\nMatching microwaves:");
         boolean found = false;
         for (Appliance appliance : appliances) {
-            if (appliance instanceof Microwave) {
+            if (appliance instanceof Microwave && appliance.getQuantity() > 0) {
                 Microwave microwave = (Microwave) appliance;
                 if (microwave.getRoomType() == roomType) {
                     System.out.println(microwave.toString());
@@ -241,7 +247,7 @@ public class ModernAppliancesApp {
         System.out.println("\nMatching dishwashers:");
         boolean found = false;
         for (Appliance appliance : appliances) {
-            if (appliance instanceof Dishwasher) {
+            if (appliance instanceof Dishwasher && appliance.getQuantity() > 0) {
                 Dishwasher dishwasher = (Dishwasher) appliance;
                 if (dishwasher.getSoundRating().equalsIgnoreCase(soundRating)) {
                     System.out.println(dishwasher.toString());
@@ -267,23 +273,36 @@ public class ModernAppliancesApp {
             return;
         }
 
-        if (count > appliances.size()) {
-            count = appliances.size();
+        // Filter to only include appliances with quantity > 0
+        List<Appliance> availableAppliances = new ArrayList<>();
+        for (Appliance appliance : appliances) {
+            if (appliance.getQuantity() > 0) {
+                availableAppliances.add(appliance);
+            }
+        }
+
+        if (availableAppliances.isEmpty()) {
+            System.out.println("No appliances available.");
+            return;
+        }
+
+        if (count > availableAppliances.size()) {
+            count = availableAppliances.size();
             System.out.println("Only " + count + " appliances available.");
         }
 
         System.out.println("\nRandom appliances:");
-        List<Appliance> shuffled = new ArrayList<>(appliances);
-        Collections.shuffle(shuffled, random);
+        Collections.shuffle(availableAppliances, random);
 
         for (int i = 0; i < count; i++) {
-            System.out.println(shuffled.get(i).toString());
+            System.out.println(availableAppliances.get(i).toString());
             System.out.println();
         }
     }
 
     /**
      * Saves appliances back to file and exits the program
+     * Only saves appliances with quantity > 0
      */
     private static void saveAndExit() {
         boolean success = ApplianceFileManager.saveAppliances(appliances);

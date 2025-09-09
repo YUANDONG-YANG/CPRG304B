@@ -16,7 +16,19 @@ import java.util.List;
  */
 public class ApplianceFileManager {
 
-    private static final String DEFAULT_FILENAME = "appliances.txt";
+    private static final String FILENAME = "appliances.txt";
+    private static final boolean DEBUG = true; // 设置为false以关闭详细调试输出
+
+    /**
+     * Gets a File object with the correct path to the resources directory
+     *
+     * @param filename The filename to use
+     * @return File object with the correct path
+     */
+    private static File getFileWithPath(String filename) {
+        String currentDir = System.getProperty("user.dir");
+        return new File(currentDir, "src/resources/" + filename);
+    }
 
     /**
      * Loads appliances from the default file
@@ -24,7 +36,7 @@ public class ApplianceFileManager {
      * @return List of loaded appliances
      */
     public static List<Appliance> loadAppliances() {
-        return loadAppliances(DEFAULT_FILENAME);
+        return loadAppliances(FILENAME);
     }
 
     /**
@@ -36,19 +48,21 @@ public class ApplianceFileManager {
     public static List<Appliance> loadAppliances(String filename) {
         List<Appliance> appliances = new ArrayList<>();
 
-        // Debug information
-        File file = new File(filename);
+        // 获取正确的文件路径
+        File file = getFileWithPath(filename);
+
+        // 调试信息
         System.out.println("Looking for file at: " + file.getAbsolutePath());
         System.out.println("File exists: " + file.exists());
         System.out.println("Current working directory: " + System.getProperty("user.dir"));
 
         if (!file.exists()) {
-            System.err.println("File not found: " + filename);
+            System.err.println("File not found: " + file.getAbsolutePath());
             System.out.println("Starting with empty appliance list...");
             return appliances;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) { // 使用file对象而非仅filename
             String line;
             int lineNumber = 0;
             int successCount = 0;
@@ -57,20 +71,24 @@ public class ApplianceFileManager {
             while ((line = br.readLine()) != null) {
                 lineNumber++;
 
-                // Skip empty lines
+                // 跳过空行
                 if (line.trim().isEmpty()) {
                     continue;
                 }
 
-                System.out.println("Reading line " + lineNumber + ": " + line);
+                if (DEBUG) {
+                    System.out.println("Reading line " + lineNumber + ": " + line);
+                }
 
                 try {
                     Appliance appliance = parseApplianceFromLine(line);
                     if (appliance != null) {
                         appliances.add(appliance);
                         successCount++;
-                        System.out.println("Successfully created: " + appliance.getBrand() +
-                                " " + appliance.getApplianceType());
+                        if (DEBUG) {
+                            System.out.println("Successfully created: " + appliance.getBrand() +
+                                    " " + appliance.getApplianceType());
+                        }
                     } else {
                         errorCount++;
                         System.err.println("Failed to create appliance from line " + lineNumber);
@@ -106,7 +124,9 @@ public class ApplianceFileManager {
         }
 
         String[] parts = line.split(";");
-        System.out.println("Split into " + parts.length + " parts");
+        if (DEBUG) {
+            System.out.println("Split into " + parts.length + " parts");
+        }
 
         if (parts.length < 8) {
             System.err.println("Invalid line format (need at least 8 fields): " + line);
@@ -114,7 +134,7 @@ public class ApplianceFileManager {
         }
 
         try {
-            // Extract common attributes
+            // 提取共同属性
             String itemNumber = parts[0].trim();
             String brand = parts[1].trim();
             int quantity = Integer.parseInt(parts[2].trim());
@@ -122,27 +142,29 @@ public class ApplianceFileManager {
             String color = parts[4].trim();
             double price = Double.parseDouble(parts[5].trim());
 
-            // Determine appliance type from first digit
+            // 从第一位数字确定电器类型
             if (itemNumber.isEmpty()) {
                 System.err.println("Empty item number in line: " + line);
                 return null;
             }
 
             char firstDigit = itemNumber.charAt(0);
-            System.out.println("Creating appliance type: " + firstDigit + " for item: " + itemNumber);
+            if (DEBUG) {
+                System.out.println("Creating appliance type: " + firstDigit + " for item: " + itemNumber);
+            }
 
             switch (firstDigit) {
-                case '1': // Refrigerator
+                case '1': // 冰箱
                     return createRefrigerator(parts, itemNumber, brand, quantity, wattage, color, price, line);
 
-                case '2': // Vacuum
+                case '2': // 吸尘器
                     return createVacuum(parts, itemNumber, brand, quantity, wattage, color, price, line);
 
-                case '3': // Microwave
+                case '3': // 微波炉
                     return createMicrowave(parts, itemNumber, brand, quantity, wattage, color, price, line);
 
                 case '4':
-                case '5': // Dishwasher
+                case '5': // 洗碗机
                     return createDishwasher(parts, itemNumber, brand, quantity, wattage, color, price, line);
 
                 default:
@@ -252,11 +274,11 @@ public class ApplianceFileManager {
             String feature = parts[6].trim();
             String soundRating = parts[7].trim();
 
-            // Handle the case where sound rating might be empty due to missing semicolon
+            // 处理可能因缺少分号导致声音评级为空的情况
             if (soundRating.isEmpty() && parts.length == 8) {
                 System.err.println("Warning: Empty sound rating for dishwasher, line might be missing final semicolon: " + originalLine);
-                // You could set a default value here if needed
-                // soundRating = "M"; // default to Moderate
+                // 可以在这里设置默认值
+                // soundRating = "M"; // 默认为中等
             }
 
             return new Dishwasher(itemNumber, brand, quantity, wattage, color, price, feature, soundRating);
@@ -274,7 +296,7 @@ public class ApplianceFileManager {
      * @return true if save was successful, false otherwise
      */
     public static boolean saveAppliances(List<Appliance> appliances) {
-        return saveAppliances(appliances, DEFAULT_FILENAME);
+        return saveAppliances(appliances, FILENAME);
     }
 
     /**
@@ -285,11 +307,14 @@ public class ApplianceFileManager {
      * @return true if save was successful, false otherwise
      */
     public static boolean saveAppliances(List<Appliance> appliances, String filename) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+        // 获取正确的文件路径
+        File file = getFileWithPath(filename);
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) { // 使用file对象而非仅filename
             for (Appliance appliance : appliances) {
                 writer.println(appliance.toFileFormat());
             }
-            System.out.println("Successfully saved " + appliances.size() + " appliances to " + filename);
+            System.out.println("Successfully saved " + appliances.size() + " appliances to " + file.getAbsolutePath());
             return true;
 
         } catch (IOException e) {
@@ -305,7 +330,7 @@ public class ApplianceFileManager {
      * @return true if file exists, false otherwise
      */
     public static boolean fileExists() {
-        return fileExists(DEFAULT_FILENAME);
+        return fileExists(FILENAME);
     }
 
     /**
@@ -315,7 +340,7 @@ public class ApplianceFileManager {
      * @return true if file exists, false otherwise
      */
     public static boolean fileExists(String filename) {
-        return new File(filename).exists();
+        return getFileWithPath(filename).exists(); // 使用一致的文件路径方法
     }
 
     /**
@@ -324,6 +349,6 @@ public class ApplianceFileManager {
      * @return Absolute path of the file
      */
     public static String getFilePath() {
-        return new File(DEFAULT_FILENAME).getAbsolutePath();
+        return getFileWithPath(FILENAME).getAbsolutePath(); // 使用一致的文件路径方法
     }
 }

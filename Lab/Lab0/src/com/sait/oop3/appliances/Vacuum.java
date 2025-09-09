@@ -21,7 +21,6 @@ import java.util.List;
  * - 24V (High voltage - suitable for heavy-duty cleaning)
  *
  * @author Yuandong Yang
- * @version 2.0 (Refactored version)
  */
 public class Vacuum extends Appliance {
 

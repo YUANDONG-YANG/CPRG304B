@@ -20,8 +20,7 @@ import java.util.List;
  * - K (Kitchen)
  * - W (Work site)
  *
- * @author Your Name
- * @version 2.0 (Refactored version)
+ * @author Yuandong Yang
  */
 public class Microwave extends Appliance {
 

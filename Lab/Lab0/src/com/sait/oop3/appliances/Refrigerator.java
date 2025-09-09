@@ -13,8 +13,7 @@ package com.sait.oop3.appliances;
  * File Format: ItemNumber;Brand;Quantity;Wattage;Color;Price;NumberOfDoors;Height;Width
  * Example: 089360200;Bosch;176;60;black;2000;2;62;29
  *
- * @author Your Name
- * @version 2.0 (Refactored version)
+ * @author Yuandong Yang
  */
 public class Refrigerator extends Appliance {
 

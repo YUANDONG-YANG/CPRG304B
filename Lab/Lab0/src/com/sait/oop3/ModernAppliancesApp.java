@@ -9,6 +9,7 @@ import java.util.*;
  * Main application class for Modern Appliances management system
  * Handles menu operations and business logic
  *
+ * @author Yuandong Yang
  */
 public class ModernAppliancesApp {
     private static List<Appliance> appliances = new ArrayList<>();

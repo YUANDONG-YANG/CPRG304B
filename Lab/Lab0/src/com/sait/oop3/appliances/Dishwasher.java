@@ -22,8 +22,7 @@ import java.util.List;
  * - Qu (Quiet)
  * - M (Moderate)
  *
- * @author Your Name
- * @version 2.0 (Refactored version)
+ * @author Yuandong Yang
  */
 public class Dishwasher extends Appliance {
 

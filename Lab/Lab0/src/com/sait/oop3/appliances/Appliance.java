@@ -11,8 +11,7 @@ package com.sait.oop3.appliances;
  * 3. Encapsulation: All attributes use protected modifier, allowing subclass access while
  *    protecting external access
  *
- * @author Your Name
- * @version 2.0 (Refactored version)
+ * @author Yuandong Yang
  */
 public abstract class Appliance {
     // Core attributes shared by all appliances

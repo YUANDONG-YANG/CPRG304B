@@ -13,8 +13,7 @@ import java.util.List;
  * including loading appliances from file and saving them back to file.
  * Uses dynamic resource loading with classpath-first approach and filesystem fallback.
  *
- * @author Your Name
- * @version 2.0
+ * @author Yuandong Yang
  */
 public class ApplianceFileManager {
 

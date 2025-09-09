@@ -10,59 +10,123 @@ import java.util.List;
  *
  * This class handles all file I/O operations for the appliance management system,
  * including loading appliances from file and saving them back to file.
+ * Uses dynamic resource loading with classpath-first approach and filesystem fallback.
  *
  * @author Your Name
- * @version 1.0
+ * @version 2.0
  */
 public class ApplianceFileManager {
 
     private static final String FILENAME = "appliances.txt";
-    private static final boolean DEBUG = true; // 设置为false以关闭详细调试输出
+    private static final boolean DEBUG = true;
+
+    // Possible filesystem paths to search for the file
+    private static final String[] POSSIBLE_PATHS = {
+            "resources/",
+            "src/resources/",
+            "Lab/Lab0/src/resources/",
+            "src/main/resources/",
+            ""
+    };
 
     /**
-     * Gets a File object with the correct path to the resources directory
-     *
-     * @param filename The filename to use
-     * @return File object with the correct path
-     */
-    private static File getFileWithPath(String filename) {
-        String currentDir = System.getProperty("user.dir");
-        return new File(currentDir, "src/resources/" + filename);
-    }
-
-    /**
-     * Loads appliances from the default file
+     * Loads appliances using dynamic resource detection
+     * First tries classpath, then falls back to filesystem search
      *
      * @return List of loaded appliances
      */
     public static List<Appliance> loadAppliances() {
-        return loadAppliances(FILENAME);
+        try (InputStream is = getResourceStream()) {
+            return parseAppliances(is);
+        } catch (IOException e) {
+            System.err.println("Error loading appliances: " + e.getMessage());
+            if (DEBUG) {
+                e.printStackTrace();
+            }
+            return new ArrayList<>();
+        }
     }
 
     /**
-     * Loads appliances from the specified file
+     * Gets input stream for the appliances file
+     * Priority: 1) Classpath resource, 2) Filesystem search
      *
-     * @param filename The filename to read from
-     * @return List of loaded appliances
+     * @return InputStream for the appliances file
+     * @throws IOException if file cannot be found or opened
      */
-    public static List<Appliance> loadAppliances(String filename) {
-        List<Appliance> appliances = new ArrayList<>();
+    private static InputStream getResourceStream() throws IOException {
+        // First try classpath resource
+        InputStream is = ApplianceFileManager.class
+                .getClassLoader().getResourceAsStream(FILENAME);
 
-        // 获取正确的文件路径
-        File file = getFileWithPath(filename);
-
-        // 调试信息
-        System.out.println("Looking for file at: " + file.getAbsolutePath());
-        System.out.println("File exists: " + file.exists());
-        System.out.println("Current working directory: " + System.getProperty("user.dir"));
-
-        if (!file.exists()) {
-            System.err.println("File not found: " + file.getAbsolutePath());
-            System.out.println("Starting with empty appliance list...");
-            return appliances;
+        if (is != null) {
+            if (DEBUG) {
+                System.out.println("Found " + FILENAME + " in classpath");
+            }
+            return is;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) { // 使用file对象而非仅filename
+        if (DEBUG) {
+            System.out.println(FILENAME + " not found in classpath, searching filesystem...");
+        }
+
+        // Fallback to filesystem search
+        return getFileStream();
+    }
+
+    /**
+     * Searches filesystem for the appliances file
+     *
+     * @return FileInputStream for the found file
+     * @throws IOException if file cannot be found
+     */
+    private static InputStream getFileStream() throws IOException {
+        File file = findAppliancesFile();
+        return new FileInputStream(file);
+    }
+
+    /**
+     * Searches for appliances file in known locations
+     *
+     * @return File object for the appliances file
+     * @throws IOException if file cannot be found in any location
+     */
+    private static File findAppliancesFile() throws IOException {
+        String currentDir = System.getProperty("user.dir");
+
+        if (DEBUG) {
+            System.out.println("Searching for " + FILENAME + " from: " + currentDir);
+        }
+
+        for (String path : POSSIBLE_PATHS) {
+            File file = new File(currentDir, path + FILENAME);
+            if (DEBUG) {
+                System.out.println("Checking: " + file.getAbsolutePath());
+            }
+
+            if (file.exists() && file.canRead()) {
+                if (DEBUG) {
+                    System.out.println("Found appliances file at: " + file.getAbsolutePath());
+                }
+                return file;
+            }
+        }
+
+        throw new IOException("Could not find " + FILENAME + " in any expected location. Searched paths: " +
+                String.join(", ", POSSIBLE_PATHS));
+    }
+
+    /**
+     * Parses appliances from an input stream
+     *
+     * @param inputStream The input stream to read from
+     * @return List of parsed appliances
+     * @throws IOException if reading fails
+     */
+    private static List<Appliance> parseAppliances(InputStream inputStream) throws IOException {
+        List<Appliance> appliances = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             int lineNumber = 0;
             int successCount = 0;
@@ -104,9 +168,6 @@ public class ApplianceFileManager {
             System.out.println("- Errors encountered: " + errorCount + " lines");
             System.out.println("- Total appliances in memory: " + appliances.size());
 
-        } catch (IOException e) {
-            System.err.println("Error reading appliances file: " + e.getMessage());
-            e.printStackTrace();
         }
 
         return appliances;
@@ -277,8 +338,6 @@ public class ApplianceFileManager {
             // 处理可能因缺少分号导致声音评级为空的情况
             if (soundRating.isEmpty() && parts.length == 8) {
                 System.err.println("Warning: Empty sound rating for dishwasher, line might be missing final semicolon: " + originalLine);
-                // 可以在这里设置默认值
-                // soundRating = "M"; // 默认为中等
             }
 
             return new Dishwasher(itemNumber, brand, quantity, wattage, color, price, feature, soundRating);
@@ -290,27 +349,63 @@ public class ApplianceFileManager {
     }
 
     /**
-     * Saves appliances to the default file
+     * Saves appliances to file (uses first writable location found)
      *
      * @param appliances List of appliances to save
      * @return true if save was successful, false otherwise
      */
     public static boolean saveAppliances(List<Appliance> appliances) {
-        return saveAppliances(appliances, FILENAME);
+        try {
+            File outputFile = findWritableLocation();
+            return saveAppliancesToFile(appliances, outputFile);
+        } catch (IOException e) {
+            System.err.println("Error finding writable location for save: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Finds a writable location for saving the file
+     *
+     * @return File object for writable location
+     * @throws IOException if no writable location found
+     */
+    private static File findWritableLocation() throws IOException {
+        String currentDir = System.getProperty("user.dir");
+
+        for (String path : POSSIBLE_PATHS) {
+            File dir = new File(currentDir, path);
+            File file = new File(dir, FILENAME);
+
+            // Check if directory exists or can be created
+            if (dir.exists() || dir.mkdirs()) {
+                // Check if we can write to this location
+                if (dir.canWrite()) {
+                    if (DEBUG) {
+                        System.out.println("Will save to: " + file.getAbsolutePath());
+                    }
+                    return file;
+                }
+            }
+        }
+
+        // Fallback to current directory
+        File fallbackFile = new File(currentDir, FILENAME);
+        if (DEBUG) {
+            System.out.println("Using fallback save location: " + fallbackFile.getAbsolutePath());
+        }
+        return fallbackFile;
     }
 
     /**
      * Saves appliances to the specified file
      *
      * @param appliances List of appliances to save
-     * @param filename The filename to save to
+     * @param file File to save to
      * @return true if save was successful, false otherwise
      */
-    public static boolean saveAppliances(List<Appliance> appliances, String filename) {
-        // 获取正确的文件路径
-        File file = getFileWithPath(filename);
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) { // 使用file对象而非仅filename
+    private static boolean saveAppliancesToFile(List<Appliance> appliances, File file) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
             for (Appliance appliance : appliances) {
                 writer.println(appliance.toFileFormat());
             }
@@ -319,36 +414,54 @@ public class ApplianceFileManager {
 
         } catch (IOException e) {
             System.err.println("Error saving appliances to file: " + e.getMessage());
-            e.printStackTrace();
+            if (DEBUG) {
+                e.printStackTrace();
+            }
             return false;
         }
     }
 
     /**
-     * Checks if the appliances file exists
+     * Checks if the appliances file exists in any known location
      *
      * @return true if file exists, false otherwise
      */
     public static boolean fileExists() {
-        return fileExists(FILENAME);
+        try {
+            // Check classpath first
+            InputStream is = ApplianceFileManager.class
+                    .getClassLoader().getResourceAsStream(FILENAME);
+            if (is != null) {
+                is.close();
+                return true;
+            }
+
+            // Check filesystem
+            findAppliancesFile();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     /**
-     * Checks if the specified file exists
+     * Gets the path where the appliances file was found or would be saved
      *
-     * @param filename The filename to check
-     * @return true if file exists, false otherwise
-     */
-    public static boolean fileExists(String filename) {
-        return getFileWithPath(filename).exists(); // 使用一致的文件路径方法
-    }
-
-    /**
-     * Gets the absolute path of the appliances file
-     *
-     * @return Absolute path of the file
+     * @return Path of the file
      */
     public static String getFilePath() {
-        return getFileWithPath(FILENAME).getAbsolutePath(); // 使用一致的文件路径方法
+        try {
+            // Try to find existing file first
+            File file = findAppliancesFile();
+            return file.getAbsolutePath();
+        } catch (IOException e) {
+            // Return potential save location
+            try {
+                File file = findWritableLocation();
+                return file.getAbsolutePath();
+            } catch (IOException ex) {
+                return new File(System.getProperty("user.dir"), FILENAME).getAbsolutePath();
+            }
+        }
     }
 }

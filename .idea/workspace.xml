@@ -23,7 +23,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Lab/Lab0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -60,6 +60,7 @@
       <workItem from="1757393034371" duration="510000" />
       <workItem from="1757393659953" duration="128000" />
       <workItem from="1757393813349" duration="2754000" />
+      <workItem from="1757397184793" duration="189000" />
     </task>
     <task id="LOCAL-00001" summary="update ignore">
       <created>1757393110715</created>
@@ -96,7 +97,21 @@
       <option name="project" value="LOCAL" />
       <updated>1757396516828</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix bug can not overwrite txt file">
+      <created>1757397255320</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1757397255320</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix bug can not overwrite txt file">
+      <created>1757397363005</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1757397363005</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -23,7 +23,9 @@ public class ApplianceFileManager {
 
     // Possible filesystem paths to search for the file
     private static final String[] POSSIBLE_PATHS = {
-            "Lab/Lab0/src/resources/"
+            "Lab/Lab0/src/resources/",
+            "Lab0/src/resources/",
+            "src/resources/",""
     };
 
     /**

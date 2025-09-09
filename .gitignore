@@ -1,1 +1,56 @@
-/Lab/Lab0/src/
+*.class
+target/
+out/
+build/
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/shelf/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+*.log
+
+# 包文件
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+hs_err_pid*
+
+*~
+.*.swp
+.DS_Store
+
+application-local.properties
+application-local.yml
+
+secrets.properties
+credentials.json
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Gradle
+.gradle/
+gradle/
+gradlew
+gradlew.bat

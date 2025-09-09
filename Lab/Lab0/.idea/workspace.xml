@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e8cdb5f-d40e-45b1-8d96-1fad7361b596" name="Changes" comment="debug">
-      <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sait/oop3/io/ApplianceFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sait/oop3/io/ApplianceFileManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +28,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -66,7 +64,7 @@
       <workItem from="1757391769642" duration="1254000" />
       <workItem from="1757393551528" duration="106000" />
       <workItem from="1757393791205" duration="20000" />
-      <workItem from="1757396589533" duration="522000" />
+      <workItem from="1757396589533" duration="588000" />
     </task>
     <task id="LOCAL-00001" summary="debug">
       <created>1757392752510</created>
@@ -75,7 +73,14 @@
       <option name="project" value="LOCAL" />
       <updated>1757392752510</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="debug">
+      <created>1757397163085</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1757397163085</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

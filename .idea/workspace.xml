@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9227570a-f736-4980-b4a6-9399a965f5b2" name="Changes" comment="fix bug can not overwrite txt file" />
+    <list default="true" id="9227570a-f736-4980-b4a6-9399a965f5b2" name="Changes" comment="fix bug can not overwrite txt file">
+      <change beforePath="$PROJECT_DIR$/Lab/Lab0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lab/Lab0/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,7 +25,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Lab/Lab2/lab2StartingCode/lab2StartingCode" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -61,6 +63,7 @@
       <workItem from="1757393659953" duration="128000" />
       <workItem from="1757393813349" duration="2754000" />
       <workItem from="1757397184793" duration="189000" />
+      <workItem from="1757463024083" duration="43000" />
     </task>
     <task id="LOCAL-00001" summary="update ignore">
       <created>1757393110715</created>

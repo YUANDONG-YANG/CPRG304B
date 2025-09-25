@@ -13,6 +13,7 @@ public class Student implements Comparable<Student>, Comparator<Student> {
     }
 
     public Student() {
+        
     }
 
     // Getters

@@ -19,12 +19,12 @@ public class ApplianceFileManager {
 
     private static final String FILENAME = "appliances.txt";
     private static final boolean DEBUG = true;
-
+    private static final String FILE_PATH = "src/resources/";
     // Possible filesystem paths to search for the file
     private static final String[] POSSIBLE_PATHS = {
-            "Lab/Lab0/src/resources/",
-            "Lab0/src/resources/",
-            "src/resources/",""
+//            "Lab/Lab0/src/resources/",
+//            "Lab0/src/resources/",
+            "src/resources/"
     };
 
     /**
@@ -126,7 +126,6 @@ public class ApplianceFileManager {
      */
     private static List<Appliance> parseAppliances(InputStream inputStream) throws IOException {
         List<Appliance> appliances = new ArrayList<>();
-
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             int lineNumber = 0;
@@ -136,7 +135,6 @@ public class ApplianceFileManager {
             while ((line = br.readLine()) != null) {
                 lineNumber++;
 
-                // 跳过空行
                 if (line.trim().isEmpty()) {
                     continue;
                 }
@@ -196,7 +194,6 @@ public class ApplianceFileManager {
         }
 
         try {
-            // 提取共同属性
             String itemNumber = parts[0].trim();
             String brand = parts[1].trim();
             int quantity = Integer.parseInt(parts[2].trim());
@@ -204,7 +201,6 @@ public class ApplianceFileManager {
             String color = parts[4].trim();
             double price = Double.parseDouble(parts[5].trim());
 
-            // 从第一位数字确定电器类型
             if (itemNumber.isEmpty()) {
                 System.err.println("Empty item number in line: " + line);
                 return null;
